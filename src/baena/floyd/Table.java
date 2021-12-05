@@ -13,6 +13,11 @@ public class Table {
 	
 	public static final int INFINITE = Integer.MAX_VALUE/2;
 	
+	/**
+	 * Initializes matrix to -1 instead of 0 because, in our zero based indexes, zero is actally a valid node.
+	 * 
+	 * @param n
+	 */
 	public Table(int n) {
 		
 		this.n = n;
@@ -20,7 +25,7 @@ public class Table {
 		
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < n; j++) {
-				this.matrix[i][j] = 0;
+				this.matrix[i][j] = -1;
 			}
 		}
 	}
@@ -35,7 +40,7 @@ public class Table {
 		final String INFINITE_CHAR = "-";
 		List<String> auxData = new ArrayList<>();
 
-		try (BufferedReader br = new BufferedReader(new FileReader(getClass().getClassLoader().getResource(pathFile).getPath()))){
+		try (BufferedReader br = new BufferedReader(new FileReader(pathFile))){
 			String line = br.readLine();
 
 			while(line != null) {
@@ -71,7 +76,7 @@ public class Table {
 	 * @param j
 	 * @return
 	 */
-	public int getLength(int i, int j) {
+	public int get(int i, int j) {
 		return matrix[i][j];
 	}
 	
@@ -86,7 +91,7 @@ public class Table {
 	 * @param j
 	 * @param length
 	 */
-	public void setLength(int i, int j, int length) {
+	public void set(int i, int j, int length) {
 		matrix[i][j] = length;
 	}
 }
