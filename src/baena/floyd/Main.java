@@ -24,7 +24,7 @@ public class Main {
 			} else {
 				// this is either the read data or write data file
 				// read data file has to exist in disk already, but write data file has to not exist
-				String filePath = "./Data/" + arg;
+				String filePath = arg;
 				
 				File f = new File(filePath);
 				if(f.exists()) {
