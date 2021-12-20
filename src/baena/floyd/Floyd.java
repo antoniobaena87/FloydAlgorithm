@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 
 public class Floyd {
 	
-	Table M;		// initially, the adjacency matrix
-	Table route;	// solution
+	Table M;		// initially, the adjacency matrix; we update this table with new distances
+	Table route;	// solution, it contains nodes values (0, 1, 2 ... N)
 	boolean trace;
 	boolean saveToDisk;
 	
@@ -41,6 +41,12 @@ public class Floyd {
 					}
 				}
 			}
+		}
+		
+		if(trace) {
+			System.out.println("Printing route table...\n");
+			route.printTable();
+			System.out.print("\n");
 		}
 	}
 	

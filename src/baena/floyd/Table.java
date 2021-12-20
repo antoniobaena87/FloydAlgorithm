@@ -8,13 +8,14 @@ import java.util.List;
 
 public class Table {
 	
-	private int[][] matrix;
-	private int n;
+	private int[][] matrix;		// the matrix containing the values
+	private int n;				// number of nodes
 	
 	public static final int INFINITE = Integer.MAX_VALUE/2;
+	public static final int INIT_VALUE = -1;
 	
 	/**
-	 * Initializes matrix to -1 instead of 0 because, in our zero based indexes, zero is actally a valid node.
+	 * Initializes matrix to -1 instead of 0 because, in our zero based indexes, zero is actually a valid node.
 	 * 
 	 * @param n
 	 */
@@ -25,7 +26,7 @@ public class Table {
 		
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < n; j++) {
-				this.matrix[i][j] = -1;
+				this.matrix[i][j] = Table.INIT_VALUE;
 			}
 		}
 	}
@@ -93,5 +94,15 @@ public class Table {
 	 */
 	public void set(int i, int j, int length) {
 		matrix[i][j] = length;
+	}
+	
+	public void printTable() {
+		for(int i=0; i < n; i++) {
+			for(int j=0; j < n; j++) {
+				String nodeShow = String.valueOf(matrix[j][i] + 1);	// nodes contained in this table are 0 based, so we must add 1 to ease readability
+				System.out.printf("\t%s", matrix[j][i] == Table.INIT_VALUE ? '-' : nodeShow);
+			}
+			System.out.print("\n");
+		}
 	}
 }
