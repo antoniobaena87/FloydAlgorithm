@@ -97,10 +97,23 @@ public class Table {
 	}
 	
 	public void printTable() {
-		for(int i=0; i < n; i++) {
+		int column = 1;
+		
+		for(int i=-2; i < n; i++) {
+			if(i > -1) System.out.print(i+1 + " | ");
+			else System.out.print("\t");
+			
 			for(int j=0; j < n; j++) {
+				if(i == -2) {
+					System.out.printf("%d\t", column++);
+					continue;
+				} else if(i == -1) {
+					System.out.print("-------");
+					continue;
+				}
+				
 				String nodeShow = String.valueOf(matrix[j][i] + 1);	// nodes contained in this table are 0 based, so we must add 1 to ease readability
-				System.out.printf("\t%s", matrix[j][i] == Table.INIT_VALUE ? '-' : nodeShow);
+				System.out.printf("\t%s", matrix[j][i] == Table.INIT_VALUE ? '*' : nodeShow);
 			}
 			System.out.print("\n");
 		}
