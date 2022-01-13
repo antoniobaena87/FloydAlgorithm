@@ -45,6 +45,10 @@ public class Main {
 		
 		Floyd floyd;
 		
+		if(args.length == 1 && args[0].equals(HELP_PARAM)) {
+			return;
+		}
+		
 		if (dataIn == null) {
 			floyd = new Floyd(new Table(), trace, saveToDisk);
 		} else {
