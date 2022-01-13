@@ -22,6 +22,20 @@ public class Floyd {
 		route = new Table(M.getNumberOfNodes());
 	}
 	
+	public Floyd(Table dataTable, boolean trace, boolean saveToDisk) {
+		this.trace = trace;
+		this.saveToDisk = saveToDisk;
+		
+		// Load M table with adjacency matrix data
+		M = dataTable;
+		
+		// Initialize route table to zero
+		route = new Table(M.getNumberOfNodes());
+	}
+	
+	/**
+	 * Main method that solve the problem.
+	 */
 	public void solve() {
 		
 		int n = M.getNumberOfNodes();
@@ -29,15 +43,15 @@ public class Floyd {
 		
 		for(int k = 0; k < n; k++) {
 			for(int i = 0; i < n; i++) {
-				for(int j = 0; j < n; j++) {
+				for(int j = 0; j < n; j++) {	// Three nested loops, cost of n^3
 					
 					tmp = M.get(i, k) + M.get(k, j);
 					
 					if(tmp < M.get(i, j)) {
 						if(trace) System.out.printf("Estableciendo distacia %d entre los nodos %d y %d\n", tmp, i+1, j+1);
-						M.set(i, j, tmp);
+						M.set(i, j, tmp);	// constant cost
 						if(trace) System.out.printf("Añadiendo nodo %d como parte del camino entre %d y %d\n\n", k+1, i+1, j+1);
-						route.set(i, j, k);
+						route.set(i, j, k);	// constant cost
 					}
 				}
 			}
@@ -45,7 +59,7 @@ public class Floyd {
 		
 		if(trace) {
 			System.out.println("Printing route table...\n");
-			route.printTable();
+			route.printTable();	// n^2 cost
 			System.out.print("\n");
 		}
 	}
@@ -58,23 +72,36 @@ public class Floyd {
 		return M;
 	}
 	
+	/**
+	 * Prints the routes.
+	 * 
+	 * @param t the table containing routes
+	 */
 	public static void printRoutes(Table t) {
 		
 		int n = t.getNumberOfNodes();
 
 		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
+			for(int j = 0; j < n; j++) {	// two nested loops, cost of n^2
 				
 				if(t.get(i, j) != Table.INFINITE) {
 					System.out.printf("Ruta de %d a %d: ", i+1, j+1);
 					System.out.printf("%d, ", i+1);
-					printRoute(t, i, j);
+					printRoute(t, i, j);	// cost of n
 					System.out.println(j+1);
 				}
 			}
 		}
 	}
 	
+	/**
+	 * Recursively prints a route. In the worst case, the route implies running through every node in the graph,
+	 * so the cost is n.
+	 * 
+	 * @param t
+	 * @param i
+	 * @param j
+	 */
 	private static void printRoute(Table t, int i, int j) {
 		
 		int k = t.get(i, j);
@@ -93,13 +120,13 @@ public class Floyd {
 		int n = route.getNumberOfNodes();
 
 		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < n; j++) {
+			for(int j = 0; j < n; j++) {	// cost of n^2
 				
 				if(route.get(i, j) != Table.INFINITE) {
 					
 					solutionString.append("[").append(i+1).append(",").append(j+1).append("] : ");
 					solutionString.append(i+1).append(", ");
-					getRoute(solutionString, i, j);
+					getRoute(solutionString, i, j);	// cost of n
 					solutionString.append(j+1);
 					solutionString.append(": ").append(M.get(i, j));
 					if(i < n - 1 || j < n - 1) solutionString.append("\n");

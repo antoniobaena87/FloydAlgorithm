@@ -43,7 +43,14 @@ public class Main {
 			}
 		}
 		
-		Floyd floyd = new Floyd(dataIn, trace, saveToDisk);
+		Floyd floyd;
+		
+		if (dataIn == null) {
+			floyd = new Floyd(new Table(), trace, saveToDisk);
+		} else {
+			floyd = new Floyd(dataIn, trace, saveToDisk);
+		}
+		
 		floyd.solve();
 		
 		floyd.saveSolution(dataOut);

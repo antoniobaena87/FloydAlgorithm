@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Table {
 	
@@ -46,7 +47,7 @@ public class Table {
 
 			while(line != null) {
 				
-				if(line.isBlank()) {
+				if(line.trim().isEmpty()) {
 					line = br.readLine();
 					continue;
 				}
@@ -63,6 +64,39 @@ public class Table {
 		
 		for(int i = 0; i < n; i++) {
 			String[] data = auxData.get(i).split(" ");
+			
+			for(int j = 0; j < n; j++) {
+				this.matrix[i][j] = data[j].equals(INFINITE_CHAR) ? Table.INFINITE : Integer.parseInt(data[j]);
+			}
+		}
+	}
+	
+	/**
+	 * Creates a table from console input.
+	 */
+	public Table() {
+		final String INFINITE_CHAR = "-";
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Introduce la matriz de adyacencia siguiendo el formato establecido.\n"
+				+ "Pulsa intro para saltar de linea. Pulsa intro en una línea vacía para terminar.");
+		
+		String line;
+		List<String> lines = new ArrayList<>();
+		
+		do {
+			line = scanner.nextLine();
+			lines.add(line);
+		} while (!line.trim().isEmpty());
+		
+		scanner.close();
+		
+		n = lines.size() - 1;
+		
+		this.matrix = new int[n][n];
+		
+		for(int i = 0; i < n; i++) {
+			String[] data = lines.get(i).split(" ");
 			
 			for(int j = 0; j < n; j++) {
 				this.matrix[i][j] = data[j].equals(INFINITE_CHAR) ? Table.INFINITE : Integer.parseInt(data[j]);
